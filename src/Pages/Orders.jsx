@@ -20,7 +20,7 @@ const Orders = () => {
       //   "cuisine_name": "Oreo",
       //   "__v": 0
       try{
-        const res = await axios.get('http://localhost:5000/api/foods')
+        const res = await axios.get('https://ambula-backend.vercel.app/api/foods')
         const arr = []
         res.data.map( (data) => {
           arr.push({userid : data.userid, info_name : data.info_name, diet_type : data.diet_type, cuisine_name : data.cuisine_name})

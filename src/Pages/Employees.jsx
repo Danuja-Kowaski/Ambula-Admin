@@ -17,7 +17,7 @@ const Employees = () => {
   useEffect( ()=>{
     const getAllUsers = async () => {
       try{
-        const res = await axios.get('http://localhost:5000/api/users')
+        const res = await axios.get('https://ambula-backend.vercel.app/api/users')
         // setuserList(res.data);
         const arr = []
         res.data.map( (data) => {
