@@ -1,46 +1,117 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { GridComponent, ColumnsDirective, ColumnDirective,Page, Search, Inject, Toolbar, Edit, CommandColumn } from '@syncfusion/ej2-react-grids';
-import {Header} from '../Components'
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  GridComponent,
+  ColumnsDirective,
+  ColumnDirective,
+  Page,
+  Search,
+  Inject,
+  Toolbar,
+  Edit,
+  CommandColumn,
+} from "@syncfusion/ej2-react-grids";
+import { Header } from "../Components";
 
 const Employees = () => {
-  const editSettings = { allowEditing: true, allowAdding: true, allowDeleting: true, allowEditOnDblClick: false };
+  const editSettings = {
+    allowEditing: true,
+    allowAdding: true,
+    allowDeleting: true,
+    allowEditOnDblClick: false,
+  };
   const validationRule = { required: true };
-  const commands= [{ type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' } },
-  { type: 'Delete', buttonOption: { iconCss: 'e-icons e-delete', cssClass: 'e-flat' } },
-  { type: 'Save', buttonOption: { iconCss: 'e-icons e-update', cssClass: 'e-flat' } },
-  { type: 'Cancel', buttonOption: { iconCss: 'e-icons e-cancel-icon', cssClass: 'e-flat' } }];
+  const commands = [
+    {
+      type: "Edit",
+      buttonOption: { iconCss: " e-icons e-edit", cssClass: "e-flat" },
+    },
+    {
+      type: "Delete",
+      buttonOption: { iconCss: "e-icons e-delete", cssClass: "e-flat" },
+    },
+    {
+      type: "Save",
+      buttonOption: { iconCss: "e-icons e-update", cssClass: "e-flat" },
+    },
+    {
+      type: "Cancel",
+      buttonOption: { iconCss: "e-icons e-cancel-icon", cssClass: "e-flat" },
+    },
+  ];
 
   const [userList, setuserList] = useState([]);
   //fetch all recipes
-  useEffect( ()=>{
+  useEffect(() => {
     const getAllUsers = async () => {
-      try{
-        const res = await axios.get('https://ambula-backend.vercel.app/api/users')
+      try {
+        const res = await axios.get(
+          "https://ambula-backend.vercel.app/api/users"
+        );
         // setuserList(res.data);
-        const arr = []
-        res.data.map( (data) => {
-          arr.push({name : data.username, email : data.email, id : data._id})
-        })
-        setuserList(arr)
-      }catch(err){
-      }
-    }
-    getAllUsers()
-  } ,[])
+        const arr = [];
+        res.data.map((data) => {
+          arr.push({
+            id: data._id,
+            name: data.name,
+            email: data.email,
+            user_type: data.user_type,
+          });
+        });
+        setuserList(arr);
+      } catch (err) {}
+    };
+    getAllUsers();
+  }, []);
+
+  console.log(userList);
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header category="Page" title="Customers" />
-      <div className='control-pane'>
-        <div className='control-section'>
-          <GridComponent id='gridcomp' dataSource={userList} allowPaging={true} pageSettings={{ pageCount: 5 }} editSettings={editSettings}>
+      <div className="control-pane">
+        <div className="control-section">
+          <GridComponent
+            id="gridcomp"
+            dataSource={userList}
+            allowPaging={true}
+            pageSettings={{ pageCount: 5 }}
+            editSettings={editSettings}
+          >
             <ColumnsDirective>
-              <ColumnDirective field='id' headerText='User ID' width='120' textAlign='Right' isPrimaryKey={true} validationRules={validationRule}></ColumnDirective>
-              <ColumnDirective field='name' headerText='Username' width='150' validationRules={validationRule}></ColumnDirective>
-              <ColumnDirective field='email' headerText='Email' width='120' validationRules={validationRule}></ColumnDirective>
-              <ColumnDirective headerText='Manage Records' width='160' commands={commands}></ColumnDirective>
+              <ColumnDirective
+                field="id"
+                headerText="User ID"
+                width="120"
+                textAlign="Right"
+                isPrimaryKey={true}
+                validationRules={validationRule}
+              ></ColumnDirective>
+              <ColumnDirective
+                field="name"
+                headerText="Username"
+                width="150"
+                validationRules={validationRule}
+              ></ColumnDirective>
+              <ColumnDirective
+                field="email"
+                headerText="Email"
+                width="120"
+                validationRules={validationRule}
+              ></ColumnDirective>
+              <ColumnDirective
+                field="user_type"
+                headerText="User Type"
+                width="120"
+                textAlign="Right"
+                isPrimaryKey={true}
+                validationRules={validationRule}
+              ></ColumnDirective>
+              <ColumnDirective
+                headerText="Manage Records"
+                width="160"
+                commands={commands}
+              ></ColumnDirective>
             </ColumnsDirective>
             <Inject services={[Page, CommandColumn, Edit]} />
           </GridComponent>
