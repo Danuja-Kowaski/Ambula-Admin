@@ -1,6 +1,7 @@
-export { default as Ecommerce } from './Ecommerce';
 export { default as Kanban } from './Kanban';
-export { default as Orders } from './Orders';
+export { default as FoodInfo } from './FoodInfo';
+export { default as RegionalInfo } from './RegionalInfo';
+export { default as DietInfo } from './DietInfo';
 export { default as Employees } from './Employees';
 export { default as Editor } from './Editor';
 export { default as Customers } from './Customers';

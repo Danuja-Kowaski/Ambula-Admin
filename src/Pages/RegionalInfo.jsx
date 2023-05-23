@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import {
   GridComponent,
   ColumnsDirective,
   ColumnDirective,
   Page,
-  Search,
   Inject,
-  Toolbar,
   Edit,
   CommandColumn,
 } from "@syncfusion/ej2-react-grids";
 import { Header } from "../Components";
+import { regionalData } from "../Data/dummy";
 
-const Employees = () => {
+const regionalInfo = () => {
   const editSettings = {
     allowEditing: true,
     allowAdding: true,
@@ -40,69 +38,51 @@ const Employees = () => {
     },
   ];
 
-  const [userList, setuserList] = useState([]);
-  //Fetch all Users
-  useEffect(() => {
-    const getAllUsers = async () => {
-      try {
-        const res = await axios.get(
-          "https://ambula-backend.vercel.app/api/users"
-        );
-        // setuserList(res.data);
-        const arr = [];
-        res.data.map((data) => {
-          arr.push({
-            id: data._id,
-            name: data.name,
-            email: data.email,
-            user_type: data.user_type,
-          });
-        });
-        setuserList(arr);
-      } catch (err) {}
-    };
-    getAllUsers();
-  }, []);
-
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Users" />
+      <Header category="Page" title="Regional Information" />
       <div className="control-pane">
         <div className="control-section">
           <GridComponent
             id="gridcomp"
-            dataSource={userList}
+            dataSource={regionalData}
             allowPaging={true}
             pageSettings={{ pageCount: 5 }}
             editSettings={editSettings}
           >
             <ColumnsDirective>
               <ColumnDirective
-                field="id"
-                headerText="User ID"
+                field="ID"
+                headerText="ID"
                 width="120"
                 textAlign="Right"
                 isPrimaryKey={true}
                 validationRules={validationRule}
               ></ColumnDirective>
               <ColumnDirective
-                field="name"
-                headerText="Username"
+                field="Name"
+                headerText="Name"
                 width="150"
                 validationRules={validationRule}
               ></ColumnDirective>
               <ColumnDirective
-                field="email"
-                headerText="Email"
+                field="CuisineType"
+                headerText="Cuisine Type"
                 width="120"
                 validationRules={validationRule}
               ></ColumnDirective>
               <ColumnDirective
-                field="user_type"
-                headerText="User Type"
+                field="DietType"
+                headerText="Diet Type"
                 width="120"
                 textAlign="Right"
-                isPrimaryKey={true}
+                validationRules={validationRule}
+              ></ColumnDirective>
+              <ColumnDirective
+                field="Location"
+                headerText="Location"
+                width="120"
+                textAlign="Right"
                 validationRules={validationRule}
               ></ColumnDirective>
               <ColumnDirective
@@ -118,4 +98,5 @@ const Employees = () => {
     </div>
   );
 };
-export default Employees;
+
+export default regionalInfo;
